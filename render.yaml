@@ -1,0 +1,34 @@
+services:
+  - type: worker
+    name: gyro-jr
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gyro-postgres
+          property: connectionString
+      - key: OWNER_ID
+        value: "5264127517"
+      - key: GROUP_ID
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: SPONTANEOUS_PROBABILITY
+        value: "0.10"
+      - key: GLOBAL_COOLDOWN_SECONDS
+        value: "35"
+      - key: USER_COOLDOWN_SECONDS
+        value: "180"
+      - key: MAX_REPLIES_PER_HOUR
+        value: "18"
+
+databases:
+  - name: gyro-postgres
+    databaseName: gyro
+    user: gyro
